@@ -1,23 +1,21 @@
-const express = require("express");
-const cors = require("cors");
 require("dotenv").config();
 
-const feedbackRoutes = require("./routes/feedbackRoutes");
+const app = require("./src/app");
+const initializeDatabase = require("./src/db/init");
+const initDatabase = require("./src/db/initDatabase");
 
-const app = express();
+const PORT = Number(process.env.PORT) || 3001;
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  }),
-);
+(async () => {
+  try {
+    await initDatabase();       // Create DB if not exists
+    await initializeDatabase(); // Create tables if not exist
 
-app.use(express.json());
-
-app.use("/api", feedbackRoutes);
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`🚀 Feedback API running on http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Startup failed:", err);
+    process.exit(1);
+  }
+})();
