@@ -29,16 +29,16 @@ async function initializeDatabase() {
         project_name VARCHAR(255),
         reviewer_name VARCHAR(255),
         period_label VARCHAR(50) NOT NULL,
-        rating_technical INT,
-        rating_communication INT,
-        rating_reliability INT,
-        rating_collaboration INT,
-        rating_overall INT,
+        rating_technical TEXT NULL,
+        rating_communication TEXT NULL,
+        rating_reliability TEXT NULL,
+        rating_collaboration TEXT NULL,
+        rating_overall TEXT NOT NULL,
 
-        going_well TEXT,
-        could_improve TEXT,
+        going_well TEXT NULL,
+        could_improve TEXT NULL,
 
-        submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        submitted_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
         CONSTRAINT fk_feedback_link
           FOREIGN KEY (link_id)

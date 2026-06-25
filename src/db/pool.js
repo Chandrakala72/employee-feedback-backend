@@ -3,11 +3,11 @@ require("dotenv").config();
 
 // Create a connection pool to the MySQL database using environment variables
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || "localhost",
-  port: Number(process.env.DB_PORT) || 3306,
-  database: process.env.DB_NAME || "technerds_feedback",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "Selvam@1996",
+  host: process.env.LOCAL_DB_HOST || "localhost",
+  port: Number(process.env.LOCAL_DB_PORT) || 3306,
+  database: process.env.LOCAL_DB_NAME || "technerds_feedback",
+  user: process.env.LOCAL_DB_USER || "root",
+  password: process.env.LOCAL_DB_PASSWORD || "Selvam@1996",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -19,7 +19,7 @@ const pool = mysql.createPool({
 pool
   .getConnection()
   .then((conn) => {
-    console.log("✅  MySQL connected –", process.env.DB_NAME);
+    console.log("✅  MySQL connected –", process.env.LOCAL_DB_NAME);
     conn.release();
   })
   .catch((err) => {
