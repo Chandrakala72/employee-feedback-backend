@@ -15,7 +15,7 @@ async function initDatabase() {
     COLLATE utf8mb4_unicode_ci
   `);
 
-  console.log(`✅ Database ${process.env.LOCAL_DB_NAME} is ready`);
+  console.log(`Database ${process.env.LOCAL_DB_NAME} is ready`);
 
   await connection.end();
 }

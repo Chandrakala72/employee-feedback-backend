@@ -10,24 +10,26 @@ function check(req, res, next) {
 
 /* ── Link creation ── */
 const createLinkRules = [
-  body("reviewName")
-    .isString()
-    .notEmpty()
-    .withMessage("reviewName is required")
-    .isLength({ max: 255 }),
   body("employeeName")
     .isString()
     .notEmpty()
     .withMessage("employeeName is required")
-    .isLength({ max: 255 }),
+    .isLength({ max: 255 })
+    .withMessage("employeeName must not exceed 255 characters"),
   body("projectName")
-    .optional({ nullable: true })
     .isString()
-    .isLength({ max: 255 }),
+    .trim()
+    .notEmpty()
+    .withMessage("projectName is required and cannot be empty")
+    .isLength({ max: 255 })
+    .withMessage("projectName must not exceed 255 characters"),
   body("reviewerName")
-    .optional({ nullable: true })
     .isString()
-    .isLength({ max: 255 }),
+    .trim()
+    .notEmpty()
+    .withMessage("reviewerName is required and cannot be empty")
+    .isLength({ max: 255 })
+    .withMessage("reviewerName must not exceed 255 characters"),
   body("month").isInt({ min: 0, max: 11 }).withMessage("month must be 0–11"),
   body("year")
     .isInt({ min: 2000, max: 2100 })
@@ -43,21 +45,34 @@ const submitResponseRules = [
     .isUUID()
     .withMessage("linkId must be a valid UUID"),
   body("reviewerName")
-    .optional({ nullable: true })
     .isString()
-    .isLength({ max: 255 }),
+    .trim()
+    .notEmpty()
+    .withMessage("reviewerName is required and cannot be empty")
+    .isLength({ max: 255 })
+    .withMessage("reviewerName must not exceed 255 characters"),
   body("ratings.technical")
-    .optional({ nullable: true })
-    .isInt({ min: 1, max: 5 }),
+    .notEmpty()
+    .withMessage("ratings.technical is required")
+    .isInt({ min: 1, max: 5 })
+    .withMessage("ratings.technical must be 1–5"),
+
   body("ratings.communication")
-    .optional({ nullable: true })
-    .isInt({ min: 1, max: 5 }),
+    .notEmpty()
+    .withMessage("ratings.communication is required")
+    .isInt({ min: 1, max: 5 })
+    .withMessage("ratings.communication must be 1–5"),
+
   body("ratings.reliability")
-    .optional({ nullable: true })
-    .isInt({ min: 1, max: 5 }),
+    .notEmpty()
+    .withMessage("ratings.reliability is required")
+    .isInt({ min: 1, max: 5 })
+    .withMessage("ratings.reliability must be 1–5"),
   body("ratings.collaboration")
-    .optional({ nullable: true })
-    .isInt({ min: 1, max: 5 }),
+    .notEmpty()
+    .withMessage("ratings.collaboration is required")
+    .isInt({ min: 1, max: 5 })
+    .withMessage("ratings.collaboration must be 1–5"),
   body("ratings.overall")
     .notEmpty()
     .withMessage("ratings.overall is required")

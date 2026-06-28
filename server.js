@@ -12,10 +12,10 @@ const PORT = Number(process.env.PORT) || 3001;
     await initializeDatabase(); // Create tables if not exist
 
     app.listen(PORT, () => {
-      console.log(`🚀 Feedback API running on http://localhost:${PORT}`);
+      console.log(`Feedback API running on http://localhost:${PORT}`);
     });
   } catch (err) {
-    console.error("❌ Startup failed:", err);
+    console.error("Startup failed:", err);
     process.exit(1);
   }
 })();

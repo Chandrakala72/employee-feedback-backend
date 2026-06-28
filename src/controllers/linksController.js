@@ -22,13 +22,12 @@ function periodLabel(month, year) {
 }
 
 /* ── POST /api/links ─────────────────────────────────────────────────────────
-   Body: { reviewName, employeeName, projectName?, reviewerName?, month, year }
+   Body: { employeeName, projectName, reviewerName, month, year }
    Returns the created row including its UUID `id`.
    The frontend stores this `id` as the linkId and embeds it in the shared URL.
 */
 async function createLink(req, res) {
   const {
-    reviewName,
     employeeName,
     projectName = null,
     reviewerName = null,
@@ -42,12 +41,9 @@ async function createLink(req, res) {
 
     await localPool.query(
       `INSERT INTO feedback_links
-         (id, review_name, employee_name, project_name, reviewer_name,
-          period_month, period_year, period_label)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+         (id, employee_name, project_name, reviewer_name, period_month, period_year, period_label) VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         id,
-        reviewName,
         employeeName,
         projectName,
         reviewerName,

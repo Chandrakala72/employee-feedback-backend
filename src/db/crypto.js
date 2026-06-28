@@ -24,7 +24,7 @@ function loadKey() {
   const hex = process.env.ENCRYPTION_KEY;
   if (!hex || hex.length !== 64) {
     console.error(
-      "❌  ENCRYPTION_KEY must be a 64-character hex string (32 bytes).\n" +
+      "   ENCRYPTION_KEY must be a 64-character hex string (32 bytes).\n" +
       "   Generate one: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
     );
     process.exit(1);

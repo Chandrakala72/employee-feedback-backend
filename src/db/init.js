@@ -6,10 +6,9 @@ async function initializeDatabase() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS feedback_links (
         id VARCHAR(36) PRIMARY KEY,
-        review_name VARCHAR(255) NOT NULL,
         employee_name VARCHAR(255) NOT NULL,
-        project_name VARCHAR(255),
-        reviewer_name VARCHAR(255),
+        project_name VARCHAR(255) NOT NULL,
+        reviewer_name VARCHAR(255) NOT NULL,
         period_month INT NOT NULL,
         period_year INT NOT NULL,
         period_label VARCHAR(50) NOT NULL,
@@ -26,13 +25,13 @@ async function initializeDatabase() {
         id VARCHAR(36) PRIMARY KEY,
         link_id VARCHAR(36) NOT NULL,
         employee_name VARCHAR(255) NOT NULL,
-        project_name VARCHAR(255),
-        reviewer_name VARCHAR(255),
+        project_name VARCHAR(255) NOT NULL,
+        reviewer_name VARCHAR(255) NOT NULL,
         period_label VARCHAR(50) NOT NULL,
-        rating_technical TEXT NULL,
-        rating_communication TEXT NULL,
-        rating_reliability TEXT NULL,
-        rating_collaboration TEXT NULL,
+        rating_technical TEXT NOT NULL,
+        rating_communication TEXT NOT NULL,
+        rating_reliability TEXT NOT NULL,
+        rating_collaboration TEXT NOT NULL,
         rating_overall TEXT NOT NULL,
 
         going_well TEXT NULL,
@@ -47,9 +46,9 @@ async function initializeDatabase() {
       )
     `);
 
-    console.log("✅ Database tables initialized");
+    console.log("Database tables initialized");
   } catch (err) {
-    console.error("❌ Database initialization failed:", err);
+    console.error("Database initialization failed:", err);
   }
 }
 
