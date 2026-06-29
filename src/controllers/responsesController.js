@@ -52,6 +52,7 @@ async function submitResponse(req, res) {
     };
 
     const id = uuidv4();
+    const submittedAt = new Date().toISOString().slice(0, 19).replace("T", " ");
 
     await localPool.query(
       `INSERT INTO feedback_responses (
@@ -59,8 +60,8 @@ async function submitResponse(req, res) {
         employee_name, project_name, reviewer_name, period_label,
         rating_technical, rating_communication, rating_reliability,
         rating_collaboration, rating_overall,
-        going_well, could_improve
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        going_well, could_improve,submitted_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         id,
         link.id,
@@ -75,6 +76,7 @@ async function submitResponse(req, res) {
         enc.rating_overall,
         enc.going_well,
         enc.could_improve,
+        submittedAt
       ],
     );
 

@@ -48,7 +48,7 @@ CREATE TABLE
     -- comments — AES-256-GCM encrypted
     going_well TEXT NULL,
     could_improve TEXT NULL,
-    submitted_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    submitted_at DATETIME NOT NULL DEFAULT (UTC_TIMESTAMP()),
     PRIMARY KEY (id),
     KEY idx_link_id (link_id),
     KEY idx_employee (employee_name),

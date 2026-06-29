@@ -35,7 +35,7 @@ async function initializeDatabase() {
         going_well TEXT NULL,
         could_improve TEXT NULL,
 
-        submitted_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        submitted_at DATETIME NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
         CONSTRAINT fk_feedback_link
           FOREIGN KEY (link_id)
