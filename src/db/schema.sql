@@ -14,15 +14,13 @@ CREATE TABLE
     employee_name VARCHAR(255) NOT NULL,
     project_name VARCHAR(255) NOT NULL,
     reviewer_name VARCHAR(255) NOT NULL,
-    period_month TINYINT NOT NULL,
-    period_year SMALLINT NOT NULL,
     period_label VARCHAR(50) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     expires_at DATETIME NULL,
     is_active TINYINT (1) NOT NULL DEFAULT 1,
     PRIMARY KEY (id),
     KEY idx_employee (employee_name),
-    KEY idx_period (period_year, period_month),
+    KEY idx_period (period_label),
     KEY idx_active (is_active)
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 

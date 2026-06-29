@@ -1,28 +1,8 @@
 const localPool = require("../db/pool");
 const { v4: uuidv4 } = require("uuid");
 
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-function periodLabel(month, year) {
-  const end = Math.min(Number(month) + 5, 11);
-  return `${MONTHS[month].slice(0, 3)}–${MONTHS[end].slice(0, 3)} ${year}`;
-}
-
 /* ── POST /api/links ─────────────────────────────────────────────────────────
-   Body: { employeeName, projectName, reviewerName, month, year }
+   Body: { employeeName, projectName, reviewerName, periodLabel }
    Returns the created row including its UUID `id`.
    The frontend stores this `id` as the linkId and embeds it in the shared URL.
 */
@@ -31,26 +11,16 @@ async function createLink(req, res) {
     employeeName,
     projectName = null,
     reviewerName = null,
-    month,
-    year,
+    periodLabel,
   } = req.body;
 
   try {
     const id = uuidv4();
-    const label = periodLabel(Number(month), Number(year));
 
     await localPool.query(
       `INSERT INTO feedback_links
-         (id, employee_name, project_name, reviewer_name, period_month, period_year, period_label) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [
-        id,
-        employeeName,
-        projectName,
-        reviewerName,
-        Number(month),
-        Number(year),
-        label,
-      ],
+         (id, employee_name, project_name, reviewer_name, period_label) VALUES (?, ?, ?, ?, ?)`,
+      [id, employeeName, projectName, reviewerName, periodLabel],
     );
 
     const [rows] = await localPool.query(

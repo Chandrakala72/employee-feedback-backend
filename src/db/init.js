@@ -9,8 +9,6 @@ async function initializeDatabase() {
         employee_name VARCHAR(255) NOT NULL,
         project_name VARCHAR(255) NOT NULL,
         reviewer_name VARCHAR(255) NOT NULL,
-        period_month INT NOT NULL,
-        period_year INT NOT NULL,
         period_label VARCHAR(50) NOT NULL,
         is_active TINYINT(1) DEFAULT 1,
         expires_at DATETIME NULL,

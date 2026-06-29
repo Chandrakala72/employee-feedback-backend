@@ -30,10 +30,13 @@ const createLinkRules = [
     .withMessage("reviewerName is required and cannot be empty")
     .isLength({ max: 255 })
     .withMessage("reviewerName must not exceed 255 characters"),
-  body("month").isInt({ min: 0, max: 11 }).withMessage("month must be 0–11"),
-  body("year")
-    .isInt({ min: 2000, max: 2100 })
-    .withMessage("year must be 2000–2100"),
+  body("periodLabel")
+    .isString()
+    .trim()
+    .notEmpty()
+    .withMessage("periodLabel is required and cannot be empty")
+    .isLength({ max: 50 })
+    .withMessage("periodLabel must not exceed 255 characters"),
 ];
 
 /* ── Response submission ── */
