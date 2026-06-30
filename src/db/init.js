@@ -1,4 +1,4 @@
-const pool = require("./pool");
+const { pool } = require("./pool");
 
 async function initializeDatabase() {
   // Create tables if they don't exist

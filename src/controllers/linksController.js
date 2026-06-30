@@ -1,4 +1,4 @@
-const localPool = require("../db/pool");
+const { pool: localPool } = require("../db/pool");
 const { v4: uuidv4 } = require("uuid");
 
 /* ── POST /api/links ─────────────────────────────────────────────────────────

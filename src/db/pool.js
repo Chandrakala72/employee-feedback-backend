@@ -15,6 +15,18 @@ const pool = mysql.createPool({
   charset: "utf8mb4",
 });
 
+const nerdpeoplePool = mysql.createPool({
+  host: process.env.NERDPEOPLE_DB_HOST,
+  port: process.env.NERDPEOPLE_DB_PORT,
+  database: process.env.NERDPEOPLE_DB_NAME,
+  user: process.env.NERDPEOPLE_USER,
+  password: process.env.NERDPEOPLE_DB_PASSWORD,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  charset: "utf8mb4",
+});
+
 // Verify connectivity at startup
 pool
   .getConnection()
@@ -27,4 +39,15 @@ pool
     process.exit(1);
   });
 
-module.exports = pool;
+nerdpeoplePool
+  .getConnection()
+  .then((conn) => {
+    console.log("Nerdpeople MySQL connected –", process.env.NERDPEOPLE_DB_NAME);
+    conn.release();
+  })
+  .catch((err) => {
+    console.error("Nerdpeople MySQL connection failed:", err.message);
+    process.exit(1); // or just warn if it's non-critical
+  });
+
+module.exports = { pool, nerdpeoplePool };

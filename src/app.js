@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const linksRouter = require("./routes/links");
 const responsesRouter = require("./routes/responses");
+const employeesRouter = require("./routes/employees");
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(limiter);
 /* ── Routes ───────────────────────────────────────────────────────────────── */
 app.use("/api/links", linksRouter);
 app.use("/api/responses", responsesRouter);
+app.use("/api/employees", employeesRouter);
 
 /* ── Health check ─────────────────────────────────────────────────────────── */
 app.get("/health", (_req, res) =>

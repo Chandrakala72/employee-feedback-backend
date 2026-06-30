@@ -1,4 +1,4 @@
-const localPool = require("../db/pool");
+const { pool: localPool } = require("../db/pool");
 const { encrypt, decryptRow } = require("../db/crypto");
 const { v4: uuidv4 } = require("uuid");
 
@@ -76,7 +76,7 @@ async function submitResponse(req, res) {
         enc.rating_overall,
         enc.going_well,
         enc.could_improve,
-        submittedAt
+        submittedAt,
       ],
     );
 
