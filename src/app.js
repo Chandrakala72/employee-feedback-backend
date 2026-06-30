@@ -6,6 +6,7 @@ const rateLimit = require("express-rate-limit");
 const linksRouter = require("./routes/links");
 const responsesRouter = require("./routes/responses");
 const employeesRouter = require("./routes/employees");
+const loginRouter = require("./routes/auth");
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use(limiter);
 app.use("/api/links", linksRouter);
 app.use("/api/responses", responsesRouter);
 app.use("/api/employees", employeesRouter);
+app.use("/api/auth", loginRouter);
 
 /* ── Health check ─────────────────────────────────────────────────────────── */
 app.get("/health", (_req, res) =>
