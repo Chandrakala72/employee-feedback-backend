@@ -10,6 +10,7 @@ async function createLink(req, res) {
   const {
     employeeName,
     projectName = null,
+    clientName = null,
     reviewerName = null,
     periodLabel,
   } = req.body;
@@ -19,8 +20,8 @@ async function createLink(req, res) {
 
     await localPool.query(
       `INSERT INTO feedback_links
-         (id, employee_name, project_name, reviewer_name, period_label) VALUES (?, ?, ?, ?, ?)`,
-      [id, employeeName, projectName, reviewerName, periodLabel],
+         (id, employee_name, project_name, client_name, reviewer_name, period_label) VALUES (?, ?, ?, ?, ?, ?)`,
+      [id, employeeName, projectName, clientName, reviewerName, periodLabel],
     );
 
     const [rows] = await localPool.query(

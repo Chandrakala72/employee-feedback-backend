@@ -9,10 +9,12 @@ async function getEmployeeProjects(req, res) {
         E.EmployeeGuid AS employeeGuid,
         E.Email        AS employeeEmail,
         P.ProjectGuid  AS projectGuid,
-        P.ProjectName  AS projectName
+        P.ProjectName  AS projectName,
+        C.clientName AS clientName
       FROM EmployeeProject EP
       JOIN Employee E ON EP.EmployeeGuid = E.EmployeeGuid AND E.IsActive = 1
       JOIN Project  P ON EP.ProjectGuid  = P.ProjectGuid  AND P.IsActive = 1
+      JOIN Client C ON P.ClientGuid = C.ClientGuid AND C.IsActive = 1;
     `);
     return res.json({ success: true, data: rows });
   } catch (err) {

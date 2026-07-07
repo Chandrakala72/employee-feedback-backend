@@ -13,6 +13,7 @@ CREATE TABLE
     id CHAR(36) NOT NULL DEFAULT (UUID ()),
     employee_name VARCHAR(255) NOT NULL,
     project_name VARCHAR(255) NOT NULL,
+    client_name VARCHAR(255) NOT NULL,
     reviewer_name VARCHAR(255) NOT NULL,
     period_label VARCHAR(50) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,6 +38,7 @@ CREATE TABLE
     -- context — plain text (known to link creator, not sensitive)
     employee_name VARCHAR(255) NOT NULL,
     project_name VARCHAR(255) NOT NULL,
+    client_name VARCHAR(255) NOT NULL,
     reviewer_name VARCHAR(255) NOT NULL,
     period_label VARCHAR(50) NOT NULL,
     -- ratings — AES-256-GCM encrypted  (stored as TEXT: iv:tag:ciphertext)

@@ -9,6 +9,7 @@ async function submitResponse(req, res) {
   const {
     linkId,
     reviewerName = null,
+    clientName = null,
     ratings = {},
     goingWell = null,
     couldImprove = null,
@@ -17,7 +18,7 @@ async function submitResponse(req, res) {
   try {
     const [links] = await localPool.query(
       `SELECT id, is_active, expires_at,
-              employee_name, project_name, reviewer_name, period_label
+              employee_name, project_name, client_name, reviewer_name, period_label
        FROM feedback_links WHERE id = ?`,
       [linkId],
     );
@@ -57,16 +58,17 @@ async function submitResponse(req, res) {
     await localPool.query(
       `INSERT INTO feedback_responses (
         id, link_id,
-        employee_name, project_name, reviewer_name, period_label,
+        employee_name, project_name, client_name, reviewer_name, period_label,
         rating_technical, rating_communication, rating_reliability,
         rating_collaboration, rating_overall,
         going_well, could_improve,submitted_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         id,
         link.id,
         link.employee_name,
         link.project_name ?? null,
+        clientName ?? link.client_name ?? null,
         reviewerName ?? link.reviewer_name ?? null,
         link.period_label,
         enc.rating_technical,
@@ -107,7 +109,6 @@ async function listResponses(req, res) {
   const page = Math.max(1, Number(req.query.page) || 1);
   const limit = Math.min(500, Number(req.query.limit) || 20);
   const offset = (page - 1) * limit;
-
   const conditions = [];
   const params = [];
 
@@ -145,7 +146,7 @@ async function listResponses(req, res) {
     const [rows] = await localPool.query(
       `SELECT
          id, link_id,
-         employee_name, project_name, reviewer_name, period_label,
+         employee_name, project_name, client_name, reviewer_name, period_label,
          rating_technical, rating_communication, rating_reliability,
          rating_collaboration, rating_overall,
          going_well, could_improve, submitted_at
@@ -160,7 +161,7 @@ async function listResponses(req, res) {
       "listResponses query:",
       `SELECT
          id, link_id,
-         employee_name, project_name, reviewer_name, period_label,
+         employee_name, project_name, client_name, reviewer_name, period_label,
          rating_technical, rating_communication, rating_reliability,
          rating_collaboration, rating_overall,
          going_well, could_improve, submitted_at
@@ -196,7 +197,7 @@ async function getResponseSummary(req, res) {
   try {
     const [rows] = await localPool.query(
       `SELECT
-         employee_name, project_name, period_label,
+         employee_name, project_name, client_name, period_label,
          rating_technical, rating_communication, rating_reliability,
          rating_collaboration, rating_overall
        FROM feedback_responses WHERE link_id = ?`,
@@ -223,6 +224,7 @@ async function getResponseSummary(req, res) {
         response_count: decrypted.length,
         employee_name: rows[0].employee_name,
         project_name: rows[0].project_name,
+        client_name: clientName ?? rows[0].client_name ?? null,
         period_label: rows[0].period_label,
         avg_technical: avg("rating_technical"),
         avg_communication: avg("rating_communication"),
