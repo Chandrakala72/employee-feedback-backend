@@ -1,4 +1,8 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
+const path = require("path");
+
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 
 const app = require("./src/app");
 const initializeDatabase = require("./src/db/init");
@@ -8,7 +12,7 @@ const PORT = Number(process.env.PORT) || 3001;
 
 (async () => {
   try {
-    await initDatabase();       // Create DB if not exists
+    await initDatabase(); // Create DB if not exists
     await initializeDatabase(); // Create tables if not exist
 
     app.listen(PORT, () => {
