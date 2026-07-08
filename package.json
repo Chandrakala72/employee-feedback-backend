@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
-    "start": "cross-env NODE_ENV=production nodemon server.js"
+    "start": "cross-env NODE_ENV=production nodemon server.js",
+    "build:dev": "node build.js",
+    "zip:dev": "powershell Compress-Archive -Path dist\\* -DestinationPath app-dev-v1.zip -Force"
   },
   "keywords": [],
   "author": "",
@@ -22,10 +24,12 @@
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.22.5",
     "nodemailer": "^9.0.1",
+    "serverless-http": "^4.0.0",
     "uuid": "^14.0.1"
   },
   "devDependencies": {
     "cross-env": "^10.1.0",
+    "esbuild": "^0.28.1",
     "nodemon": "^3.1.14"
   }
 }
