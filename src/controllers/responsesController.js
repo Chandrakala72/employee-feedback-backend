@@ -41,6 +41,21 @@ async function submitResponse(req, res) {
         .status(410)
         .json({ success: false, message: "This feedback link has expired" });
 
+    /* Prevent duplicate submissions for the same link */
+    const [existing] = await localPool.query(
+      `SELECT id FROM feedback_responses WHERE link_id = ? LIMIT 1`,
+      [linkId],
+    );
+
+    if (existing.length) {
+      return res.status(409).json({
+        success: false,
+        alreadySubmitted: true,
+        message:
+          "It looks like feedback has already been submitted using this link. Thank you for your time — please feel free to close this page.",
+      });
+    }
+
     /* Encrypt sensitive fields */
     const enc = {
       rating_technical: encrypt(ratings.technical ?? null),
