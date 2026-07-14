@@ -32,6 +32,7 @@ async function initializeDatabase() {
         rating_communication TEXT NOT NULL,
         rating_reliability TEXT NOT NULL,
         rating_collaboration TEXT NOT NULL,
+        rating_solving TEXT NOT NULL,
         rating_overall TEXT NOT NULL,
 
         going_well TEXT NULL,

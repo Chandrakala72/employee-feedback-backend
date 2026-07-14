@@ -5,6 +5,7 @@ const QUESTION_LABELS = {
   technical: "Technical Skills",
   communication: "Communication Skills",
   reliability: "Reliability",
+  solving: "Problem Solving",
   collaboration: "Collaboration",
   overall: "Overall Rating",
 };
@@ -22,8 +23,14 @@ async function sendFeedbackEmail(req, res) {
       couldImprove,
     } = req.body;
 
-    if (!ratings || typeof ratings !== "object" || Object.keys(ratings).length === 0) {
-      return res.status(400).json({ error: "ratings is required and must be a non-empty object" });
+    if (
+      !ratings ||
+      typeof ratings !== "object" ||
+      Object.keys(ratings).length === 0
+    ) {
+      return res
+        .status(400)
+        .json({ error: "ratings is required and must be a non-empty object" });
     }
 
     const responses = Object.entries(ratings).map(([key, rating]) => ({
@@ -40,7 +47,13 @@ async function sendFeedbackEmail(req, res) {
       couldImprove,
     });
 
-    console.log(JSON.stringify({ level: "INFO", requestId, message: "Sending feedback email" }));
+    console.log(
+      JSON.stringify({
+        level: "INFO",
+        requestId,
+        message: "Sending feedback email",
+      }),
+    );
 
     const info = await transporter.sendMail({
       from: SENDER,
@@ -50,11 +63,25 @@ async function sendFeedbackEmail(req, res) {
       html,
     });
 
-    console.log(JSON.stringify({ level: "INFO", requestId, message: "Email sent", messageId: info.messageId }));
+    console.log(
+      JSON.stringify({
+        level: "INFO",
+        requestId,
+        message: "Email sent",
+        messageId: info.messageId,
+      }),
+    );
 
     return res.status(200).json({ success: true, messageId: info.messageId });
   } catch (err) {
-    console.error(JSON.stringify({ level: "ERROR", requestId, message: "Failed to send feedback", error: err.message }));
+    console.error(
+      JSON.stringify({
+        level: "ERROR",
+        requestId,
+        message: "Failed to send feedback",
+        error: err.message,
+      }),
+    );
     return res.status(500).json({ error: "Failed to send feedback" });
   }
 }

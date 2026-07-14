@@ -62,6 +62,7 @@ async function submitResponse(req, res) {
       rating_communication: encrypt(ratings.communication ?? null),
       rating_reliability: encrypt(ratings.reliability ?? null),
       rating_collaboration: encrypt(ratings.collaboration ?? null),
+      rating_solving: encrypt(ratings.solving ?? null),
       rating_overall: encrypt(ratings.overall),
       going_well: encrypt(goingWell || null),
       could_improve: encrypt(couldImprove || null),
@@ -75,9 +76,9 @@ async function submitResponse(req, res) {
         id, link_id,
         employee_name, project_name, client_name, reviewer_name, period_label,
         rating_technical, rating_communication, rating_reliability,
-        rating_collaboration, rating_overall,
+        rating_collaboration, rating_solving, rating_overall,
         going_well, could_improve,submitted_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         id,
         link.id,
@@ -90,6 +91,7 @@ async function submitResponse(req, res) {
         enc.rating_communication,
         enc.rating_reliability,
         enc.rating_collaboration,
+        enc.rating_solving,
         enc.rating_overall,
         enc.going_well,
         enc.could_improve,
@@ -163,7 +165,7 @@ async function listResponses(req, res) {
          id, link_id,
          employee_name, project_name, client_name, reviewer_name, period_label,
          rating_technical, rating_communication, rating_reliability,
-         rating_collaboration, rating_overall,
+         rating_collaboration, rating_solving, rating_overall,
          going_well, could_improve, submitted_at
        FROM feedback_responses
        ${where}
@@ -178,7 +180,7 @@ async function listResponses(req, res) {
          id, link_id,
          employee_name, project_name, client_name, reviewer_name, period_label,
          rating_technical, rating_communication, rating_reliability,
-         rating_collaboration, rating_overall,
+         rating_collaboration, rating_solving, rating_overall,
          going_well, could_improve, submitted_at
        FROM feedback_responses
        ${where}
@@ -214,7 +216,7 @@ async function getResponseSummary(req, res) {
       `SELECT
          employee_name, project_name, client_name, period_label,
          rating_technical, rating_communication, rating_reliability,
-         rating_collaboration, rating_overall
+         rating_collaboration, rating_solving, rating_overall
        FROM feedback_responses WHERE link_id = ?`,
       [linkId],
     );
@@ -245,6 +247,7 @@ async function getResponseSummary(req, res) {
         avg_communication: avg("rating_communication"),
         avg_reliability: avg("rating_reliability"),
         avg_collaboration: avg("rating_collaboration"),
+        avg_solving: avg("rating_solving"),
         avg_overall: avg("rating_overall"),
       },
     });

@@ -104,6 +104,7 @@ function decryptRow(row) {
     rating_communication: row.rating_communication ? Number(decrypt(row.rating_communication)) : null,
     rating_reliability:   row.rating_reliability   ? Number(decrypt(row.rating_reliability))   : null,
     rating_collaboration: row.rating_collaboration ? Number(decrypt(row.rating_collaboration)) : null,
+    rating_solving:       row.rating_solving       ? Number(decrypt(row.rating_solving))       : null,
     rating_overall:       Number(decrypt(row.rating_overall)),
     going_well:           decrypt(row.going_well),
     could_improve:        decrypt(row.could_improve),

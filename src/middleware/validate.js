@@ -76,6 +76,11 @@ const submitResponseRules = [
     .withMessage("ratings.collaboration is required")
     .isInt({ min: 1, max: 5 })
     .withMessage("ratings.collaboration must be 1–5"),
+  body("ratings.solving")
+    .notEmpty()
+    .withMessage("ratings.solving is required")
+    .isInt({ min: 1, max: 5 })
+    .withMessage("ratings.solving must be 1–5"),
   body("ratings.overall")
     .notEmpty()
     .withMessage("ratings.overall is required")
