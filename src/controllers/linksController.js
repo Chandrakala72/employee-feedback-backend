@@ -100,6 +100,21 @@ async function getLinkById(req, res) {
         .status(410)
         .json({ success: false, message: "This feedback link has expired" });
     }
+
+    const [existing] = await localPool.query(
+      `SELECT id
+       FROM feedback_responses
+       WHERE link_id = ?
+       LIMIT 1`,
+      [linkId],
+    );
+
+    if (existing.length > 0) {
+      return res.status(410).json({
+        success: false,
+        message: "This feedback link has expired",
+      });
+    }
     return res.json({ success: true, data: link });
   } catch (err) {
     console.error("getLinkById error:", err);
