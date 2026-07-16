@@ -35,7 +35,7 @@ function buildTextBlock(label, value) {
     </div>`;
 }
 
-function buildFeedbackEmailHtml({ name, reviewerName, clientName, responses, goingWell, couldImprove }) {
+function buildFeedbackEmailHtml({ name, reviewerName, clientName, periodLabel, responses, goingWell, couldImprove }) {
   const responseRows = buildRatingRows(responses);
 
   return `
@@ -55,6 +55,10 @@ function buildFeedbackEmailHtml({ name, reviewerName, clientName, responses, goi
         <tr>
           <td style="padding:4px 0;width:120px;color:#6b7280;font-size:14px;">Client</td>
           <td style="padding:4px 0;font-weight:600;color:#111827;">${escapeHtml(clientName || "—")}</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 0;width:120px;color:#6b7280;font-size:14px;">Period</td>
+          <td style="padding:4px 0;font-weight:600;color:#111827;">${escapeHtml(periodLabel || "—")}</td>
         </tr>
       </table>
 
