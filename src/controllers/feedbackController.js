@@ -34,9 +34,9 @@ async function sendFeedbackEmail(req, res) {
         .json({ error: "ratings is required and must be a non-empty object" });
     }
 
-    const responses = Object.entries(ratings).map(([key, rating]) => ({
-      question: QUESTION_LABELS[key] ?? key,
-      rating: rating ?? "-",
+    const responses = Object.keys(QUESTION_LABELS).map((key) => ({
+      question: QUESTION_LABELS[key],
+      rating: ratings[key] ?? "-",
     }));
 
     const html = buildFeedbackEmailHtml({
